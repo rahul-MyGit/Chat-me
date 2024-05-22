@@ -2,7 +2,11 @@ import React from 'react'
 
 function RightPanel() {
   return (
-    <div>right-panel is here .</div>
+<<<<<<< HEAD
+    <div>right-panel</div>
+=======
+    <div>right-panel</div>
+>>>>>>> bc2fd547832fd339cffd05a24a61efe359e3b59e
   )
 }
 
