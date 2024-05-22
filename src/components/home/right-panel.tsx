@@ -2,7 +2,7 @@ import React from 'react'
 
 function RightPanel() {
   return (
-    <div>right-panel ah</div>
+    <div>right-panel is here</div>
   )
 }
 
