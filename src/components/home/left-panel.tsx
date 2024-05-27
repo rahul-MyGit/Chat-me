@@ -1,21 +1,21 @@
 
 import { ListFilter, LogOut, MessageSquareDiff, Search, User } from "lucide-react";
 import { Input } from "../ui/input";
-import ThemeSwitch from "../ThemeSwitch";
+import ThemeSwitch from "./ThemeSwitch";
+import { conversations } from "@/dummy-data/db";
+import Conversation from "./conversation";
 
 
 function LeftPanel() {
-  const conversation = [];
 
   return (
     <div className="w-1/4 border-gray-600 border-r">
       <div className="stiky top-0 bg-left-panel z-10">
         {/* {Header} */}
-        Chatme
-        <div className="flex justify-center bg-gray-primary p-3 items-center">
+        <div className="flex justify-between bg-gray-primary p-3 items-center">
           <User size={24}/>
 
-          <div className="flex items-center gep-3">
+          <div className="flex items-center gap-3">
             <MessageSquareDiff size={20}/>
             <ThemeSwitch />
             <LogOut size={10} className="cursor-pointer"/>
@@ -36,7 +36,8 @@ function LeftPanel() {
 
       <div className='my-3 flex flex-col gap-0 max-h-[80%] overflow-auto'>
 				{/* Conversations will go here*/}
-				{conversation?.length === 0 && (
+        {conversations.map((convo)=> ( <Conversation key={convo._id} conversation={convo}/>))}
+				{conversations?.length === 0 && (
 					<>
 						<p className='text-center text-gray-500 text-sm mt-3'>No conversations yet</p>
 						<p className='text-center text-gray-500 text-sm mt-3 '>
