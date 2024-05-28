@@ -16,7 +16,7 @@ function LeftPanel() {
           <User size={24}/>
 
           <div className="flex items-center gap-3">
-            <MessageSquareDiff size={20}/>
+            <MessageSquareDiff size={22}/>
             <ThemeSwitch />
             <LogOut size={10} className="cursor-pointer"/>
           </div>
