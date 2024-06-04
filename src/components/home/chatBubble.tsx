@@ -1,4 +1,4 @@
 const ChatBubble = () => {
-	return <div>ChatBubble</div>;
+	return <div>Going to add chats</div>;
 };
 export default ChatBubble;

@@ -13,7 +13,6 @@ const MessageInput = () => {
 				<Laugh className='text-gray-600 dark:text-gray-400' />
 				<Plus className='text-gray-600 dark:text-gray-400' />
 			</div>
-			<Plus />
 			<form className='w-full flex gap-3'>
 				<div className='flex-1'>
 					<Input
@@ -40,6 +39,7 @@ const MessageInput = () => {
 							className='bg-transparent text-foreground hover:bg-transparent'
 						>
 							<Mic />
+
 						</Button>
 					)}
 				</div>
