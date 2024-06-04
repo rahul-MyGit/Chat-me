@@ -33,11 +33,11 @@ const Conversation = ({ conversation }: { conversation: any }) => {
 						{lastMessage?.sender === authUser?._id ? <MessageSeenSvg /> : ""}
 						{conversation.isGroup && <Users size={16} />}
 						{!lastMessage && "Say Hi!"}
-						{lastMessageType === "text" && lastMessage?.content.length > 30 ? (
+						{lastMessageType === "text" ? lastMessage?.content.length > 30 ? (
 							<span className='text-xs'>{lastMessage?.content.slice(0, 30)}...</span>
 						) : (
 							<span className='text-xs'>{lastMessage?.content}</span>
-						)}
+						) : null}
 						{lastMessageType === "image" && <ImageIcon size={16} />}
 						{lastMessageType === "video" && <VideoIcon size={16} />}
 					</p>
