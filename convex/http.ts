@@ -31,6 +31,12 @@ http.route({
                         image: result.data.image_url,
                     });
                     break;
+                case "session.ended":
+                    await ctx.runMutation(internal.users.setUserOffline, {
+                        tokenIdentifier: `${process.env.CLERK_APP_DOMAIN}|${result.data.user_id}`
+                    });
+                    break;
+                
             }
 
             return new Response(null, {
