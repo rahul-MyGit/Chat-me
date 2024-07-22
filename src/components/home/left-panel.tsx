@@ -5,6 +5,7 @@ import ThemeSwitch from "./ThemeSwitch";
 import { conversations } from "@/dummy-data/db";
 import Conversation from "./conversation";
 import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from "@clerk/nextjs";
+import UserListDialog from "./user-list-dialogue";
 
 
 function LeftPanel() {
@@ -15,16 +16,8 @@ function LeftPanel() {
         {/* {Header} */}
         <div className="flex justify-between bg-gray-primary p-3 items-center">
           <UserButton />
-          {/* <SignedIn >
-            <SignOutButton />
-          </SignedIn>
-
-          <SignedOut >
-            <SignInButton />
-          </SignedOut> */}
-
           <div className="flex items-center gap-3">
-            <MessageSquareDiff size={22}/>
+            <UserListDialog />
             <ThemeSwitch />
           </div>
         </div>
