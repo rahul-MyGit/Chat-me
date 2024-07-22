@@ -36,7 +36,16 @@ http.route({
                         tokenIdentifier: `${process.env.CLERK_APP_DOMAIN}|${result.data.user_id}`
                     });
                     break;
-                
+                case "session.created":
+                    await ctx.runMutation(internal.users.setUserOnline, {
+                        tokenIdentifier: `${process.env.CLERK_APP_DOMAIN}|${result.data.user_id}`
+                    });
+                    break;
+                case "user.updated":
+                    await ctx.runMutation(internal.users.updateUser, {
+                        tokenIdentifier: `${process.env.CLERK_APP_DOMAIN}|${result.data.id}`,
+                        image: result.data.image_url,
+                    });
             }
 
             return new Response(null, {
