@@ -4,7 +4,7 @@ import { MessageSeenSvg } from "@/lib/svgs";
 import { ImageIcon, Users, VideoIcon } from "lucide-react";
 
 const Conversation = ({ conversation }: { conversation: any }) => {
-	const conversationImage = conversation.groupImage;
+	const conversationImage = conversation.groupImage || conversation.image;
 	const conversationName = conversation.groupName || "Private Chat";
 	const lastMessage = conversation.lastMessage;
 	const lastMessageType = lastMessage?.messageType;
