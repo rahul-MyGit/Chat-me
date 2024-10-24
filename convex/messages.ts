@@ -5,7 +5,7 @@ import { mutation } from "./_generated/server";
 export const sendTextMessage = mutation({
     args: {
         sender: v.string(),
-        context: v.string(),
+        content: v.string(),
         conversation: v.id('conversations')
     },
     handler: async (ctx, args) => {
@@ -31,9 +31,11 @@ export const sendTextMessage = mutation({
 
         await ctx.db.insert('messages', {
             sender: args.sender,
-            content: args.context,
+            content: args.content,
             conversation: args.conversation,
             messageType: 'text'
-        })
+        });
+
+        //TODO: add gpt chat here
     }
 })
