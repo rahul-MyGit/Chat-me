@@ -65,7 +65,7 @@ export const getMessages = query({
       .collect();
 
     //**brute-force** as we are iterating over all msg for person A
-    
+
     // const messageWithSender = await Promise.all(
     //   messages.map(async (message) => {
     //     const sender = await ctx.db
@@ -80,24 +80,70 @@ export const getMessages = query({
     const userProfileCache = new Map();
 
     const messageWithSender = await Promise.all(
-        messages.map(async (message) => {
-            let sender;
+      messages.map(async (message) => {
+        let sender;
 
-            if(userProfileCache.has(message.sender)){
-                sender = userProfileCache.get(message.sender);
-            }else{
-                sender = await ctx.db
-                   .query("users")
-                   .filter((q) => q.eq(q.field("_id"), message.sender))
-                   .first();
+        if (userProfileCache.has(message.sender)) {
+          sender = userProfileCache.get(message.sender);
+        } else {
+          sender = await ctx.db
+            .query("users")
+            .filter((q) => q.eq(q.field("_id"), message.sender))
+            .first();
 
-                userProfileCache.set(message.sender, sender);
-            }
+          userProfileCache.set(message.sender, sender);
+        }
 
-            return {...message, sender};
-        })
-    )
+        return { ...message, sender };
+      })
+    );
 
     return messageWithSender;
+  },
+});
+
+export const sendImage = mutation({
+  args: {
+    imgId: v.id("_storage"),
+    sender: v.id("users"),
+    conversation: v.id("conversations"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new ConvexError("Unauthorized");
+    }
+
+    const content = (await ctx.storage.getUrl(args.imgId)) as string;
+
+    await ctx.db.insert("messages", {
+      content: content,
+      sender: args.sender,
+      messageType: "image",
+      conversation: args.conversation,
+    });
+  },
+});
+
+export const sendVideo = mutation({
+  args: {
+    videoId: v.id("_storage"),
+    sender: v.id("users"),
+    conversation: v.id("conversations"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new ConvexError("Unauthorized");
+    }
+
+    const content = (await ctx.storage.getUrl(args.videoId)) as string;
+
+    await ctx.db.insert("messages", {
+      content: content,
+      sender: args.sender,
+      messageType: "video",
+      conversation: args.conversation,
+    });
   },
 });

@@ -8,6 +8,7 @@ import { useConvoStore } from "@/store/chat-store";
 import toast from "react-hot-toast";
 import useComponentVisible from "@/hooks/useComponentVisible";
 import EmojiPicker, { Theme } from "emoji-picker-react";
+import MediaDropdown from "./MediaDropdown";
 
 const MessageInput = () => {
   const [msgText, setMsgText] = useState("");
@@ -40,9 +41,9 @@ const MessageInput = () => {
           {isComponentVisible && (
             <EmojiPicker
               theme={Theme.DARK}
-			  onEmojiClick={(emojiObject) => {
-				setMsgText(prev => prev + emojiObject.emoji)
-			  }}
+              onEmojiClick={(emojiObject) => {
+                setMsgText((prev) => prev + emojiObject.emoji);
+              }}
               style={{
                 position: "absolute",
                 bottom: "1.5rem",
@@ -53,7 +54,8 @@ const MessageInput = () => {
           )}
           <Laugh className="text-gray-600 dark:text-gray-400" />
         </div>
-        <Plus className="text-gray-600 dark:text-gray-400" />
+
+        <MediaDropdown />
       </div>
       <form onSubmit={handleSubmitTextMessage} className="w-full flex gap-3">
         <div className="flex-1">
