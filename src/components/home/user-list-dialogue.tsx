@@ -73,19 +73,20 @@ const UserListDialog = () => {
       setGroupName("");
       setSelectedImage(null);
 
+      const conversationName = isGroup
+        ? groupName
+        : users?.find((user) => user._id === selectedUsers[0])?.name;
 
-	  const conversationName = isGroup ? groupName : users?.find((user) => user._id === selectedUsers[0])?.name;
-
-	  setSelectedConversation({
-		_id: conversationId,
+      setSelectedConversation({
+        _id: conversationId,
         name: conversationName,
-		isGroup,
-        image: isGroup ? renderedImage : users?.find((user) => user._id === selectedUsers[0])?.image,
+        isGroup,
+        image: isGroup
+          ? renderedImage
+          : users?.find((user) => user._id === selectedUsers[0])?.image,
         participants: selectedUsers,
-		admin: me?._id!
-	  })
-
-
+        admin: me?._id!,
+      });
     } catch (error) {
       toast.error("Failed to create conversations");
       console.error(error);
