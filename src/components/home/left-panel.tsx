@@ -7,14 +7,27 @@ import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from "@c
 import UserListDialog from "./user-list-dialogue";
 import { useConvexAuth, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
+import { useEffect } from "react";
+import { useConvoStore } from "@/store/chat-store";
 
 
 function LeftPanel() {
 
-  const {isAuthenticated} = useConvexAuth();
+  const {isAuthenticated, isLoading} = useConvexAuth();
   const conversations = useQuery(api.conversations.getMyConversation,
     isAuthenticated ? undefined: 'skip'
   );
+
+  const {selectedConversation, setSelectedConversation} = useConvoStore();
+  useEffect(() => {
+    const conversationIds = conversations?.map((conversation) => conversation._id);
+
+    if(selectedConversation && conversationIds && !conversationIds.includes(selectedConversation._id)){
+      setSelectedConversation(null);
+    }
+  }, [conversations])
+
+  if(isLoading) return null;
 
   return (
     <div className="w-1/4 border-gray-600 border-r">
