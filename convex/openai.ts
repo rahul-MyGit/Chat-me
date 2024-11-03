@@ -4,7 +4,6 @@ import { action } from './_generated/server';
 import { api } from './_generated/api';
 
 
-
 const apiKey = process.env.OPEN_API_KEY
 
 const openai = new OpenAI({apiKey});
@@ -28,8 +27,9 @@ export const chat = action({
                 }
             ]
         })
-
-        const messsageContent = res.choices[0].message.content
+        console.log('values', res.choices[0].message);
+        
+        const messsageContent = res.choices[0].message.content //Never Runs
 
         await ctx.runMutation(api.messages.sendChatGPTMessage, {
             content: messsageContent ?? "I'm sorry, I don't know that",

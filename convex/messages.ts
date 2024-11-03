@@ -47,7 +47,8 @@ export const sendTextMessage = mutation({
 
     //AI:
 
-    if (args.content.startsWith('@gpt')) {
+    if (args.content.startsWith("@gpt")) {
+      
       await ctx.scheduler.runAfter(0, api.openai.chat, {
         messageBody: args.content,
         conversation: args.conversation
@@ -107,6 +108,9 @@ export const getMessages = query({
 
     const messageWithSender = await Promise.all(
       messages.map(async (message) => {
+        if(message.sender ==="ChatGPT") {
+          return {...message, sender: {name: "ChatGPT", image:'/gpt.png'}}
+        }
         let sender;
 
         if (userProfileCache.has(message.sender)) {
