@@ -18,8 +18,11 @@ const ChatAvatarActions = ({me, message}: Hereprops) => {
 
     const kickUser = useMutation(api.conversations.kickUser);
     const createConversation = useMutation(api.conversations.createConversation);
+    const fromAI = message.sender?.name === "ChatGPT"
+    const isGroup = selectedConversation?.isGroup;
 
     const handleKick = async (e: React.MouseEvent) => {
+        if(fromAI) return;
 
         e.stopPropagation() ;
         if(!selectedConversation) return;
@@ -67,8 +70,8 @@ const ChatAvatarActions = ({me, message}: Hereprops) => {
     >
         {message.sender.name}
 
-        {!isMember && <Ban size={16} className='text-red-500'/>}
-        {isMember && selectedConversation?.admin === me._id && (
+        {!isMember && !fromAI && isGroup &&<Ban size={16} className='text-red-500'/>}
+        {isMember && isGroup && selectedConversation?.admin === me._id && (
             <LogOut size={16} className='text-red-500 opacity-0 group-hover:opacity-100'
                 onClick={handleKick}
             />
