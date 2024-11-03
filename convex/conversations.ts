@@ -1,4 +1,3 @@
-import { conversations } from "./../src/dummy-data/db";
 import { ConvexError, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
@@ -99,6 +98,25 @@ export const getMyConversation = query({
 
     return conversationWithDetails;
   },
+});
+
+export const kickUser = mutation({
+  args: {
+    conversationId: v.id("conversations"),
+    userId: v.id("users"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new ConvexError('Unauthorized');
+
+    const conversation = await ctx.db.query('conversations').filter((q) => q.eq(q.field("_id"), args.conversationId)).unique();
+
+    if(!conversation) throw new ConvexError('conversation not found');
+
+    await ctx.db.patch( args.conversationId, {
+      participants: conversation.participants.filter(id => id !== args.userId)
+    })
+  }
 });
 
 export const generateUploadUrl = mutation(async (ctx) => {
