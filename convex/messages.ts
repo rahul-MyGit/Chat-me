@@ -43,7 +43,13 @@ export const sendTextMessage = mutation({
       messageType: "text",
     });
 
-    //TODO: add gpt chat here
+
+    //AI:
+    
+    if(args.content.startsWith('@gpt')){
+      await ctx.scheduler.runAfter(0, api.openai.chat)
+    }
+
   },
 });
 
