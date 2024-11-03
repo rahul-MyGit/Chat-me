@@ -5,5 +5,3 @@
 
 ## Architecture For Integrating ChatGPT
 
-
-![alt text](<Screenshot 2024-11-04 015711.png>)
