@@ -5,3 +5,4 @@
 
 ## Architecture For Integrating ChatGPT
 
+![Screenshot 2024-11-04 015711](https://github.com/user-attachments/assets/e962665b-4204-468c-b544-6f5aba7aaeed)
