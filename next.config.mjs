@@ -2,7 +2,8 @@
 const nextConfig = {
     images: {
         remotePatterns: [
-            {hostname: 'jovial-llama-291.convex.cloud'}
+            {hostname: 'jovial-llama-291.convex.cloud'},
+            {hostname: 'oaidalleapiprodscus.blob.core.windows.net'},
         ]
     }
 };

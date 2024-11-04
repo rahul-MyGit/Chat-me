@@ -33,7 +33,29 @@ export const chat = action({
 
         await ctx.runMutation(api.messages.sendChatGPTMessage, {
             content: messsageContent ?? "I'm sorry, I don't know that",
-            conversation: args.conversation
+            conversation: args.conversation,
+            messageType: 'text'
         })
     }
 })
+export const dall_e = action({
+    args: {
+        conversation: v.id('conversations'),
+        mesageBody: v.string(),
+    },
+   handler: async ( ctx, args) => {
+    const res = await openai.images.generate({
+        model: 'dall-e-3',
+        prompt: args.mesageBody,
+        n: 1,
+        size: '1024x1024'
+    });
+
+    const imageUrl = res.data[0].url;
+    await ctx.runMutation(api.messages.sendChatGPTMessage, {
+        content: imageUrl ?? '/poopenai.png',
+        conversation: args.conversation,
+        messageType: 'image',
+    });
+   },
+});
